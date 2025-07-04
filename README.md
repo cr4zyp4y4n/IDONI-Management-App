@@ -131,16 +131,6 @@ IDONI Project/
 
 Este proyecto está bajo la licencia MIT. Ver el archivo LICENSE para más detalles.
 
-## 🤝 Contribución
-
-Para contribuir al proyecto:
-
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
 ## 📞 Soporte
 
 Para soporte técnico o preguntas sobre la aplicación, contacta con el equipo de desarrollo de IDONI.
