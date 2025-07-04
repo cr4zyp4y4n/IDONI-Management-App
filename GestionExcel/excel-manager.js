@@ -1,4 +1,3 @@
-const { ipcRenderer } = require('electron');
 const XLSX = require('xlsx');
 
 // Variables globales para Excel
@@ -255,7 +254,7 @@ function initializeExcelManager() {
 
 async function loadExcelFile() {
     try {
-        const filePath = await ipcRenderer.invoke('select-file');
+        const filePath = await window.electronAPI.selectFile();
         if (!filePath) return;
 
         const workbook = XLSX.readFile(filePath);
@@ -760,8 +759,7 @@ async function saveExcelData() {
             timestamp: new Date().toISOString(),
             stats: calculateIdoniStats()
         };
-        
-        const filePath = await ipcRenderer.invoke('save-file', dataToSave);
+        const filePath = await window.electronAPI.saveFile(dataToSave);
         if (filePath) {
             showNotification(`✅ Datos guardados exitosamente en: ${filePath}`, 'success');
         }
@@ -1109,8 +1107,7 @@ function loadSavedData() {
 }
 
 function goBackToMainMenu() {
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.invoke('close-excel-window');
+    window.close();
 }
 
 function showNotification(message, type = 'info') {

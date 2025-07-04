@@ -1,5 +1,3 @@
-const { ipcRenderer } = require('electron');
-
 // Importar jsPDF de manera compatible con Electron
 let jsPDF;
 try {
@@ -372,7 +370,7 @@ async function exportRecipe() {
     const safeName = currentRecipe.name.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '').replace(/\s+/g, '_');
     const fileName = `Ficha_Tecnica_${safeName}.html`;
     const htmlContent = generatePDFHTML(currentRecipe);
-    const filePath = await ipcRenderer.invoke('export-table', htmlContent, fileName);
+    const filePath = await window.electronAPI.exportTable(htmlContent, fileName);
     if (filePath) {
         showNotification(`✅ Ficha técnica exportada exitosamente a: ${filePath}`, 'success');
     }

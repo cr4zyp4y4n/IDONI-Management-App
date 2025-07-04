@@ -39,12 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function openExcelWindow() {
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.invoke('open-excel-window');
+    window.electronAPI.openExcelWindow();
 }
 function openRecipeWindow() {
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.invoke('open-recipe-window');
+    window.electronAPI.openRecipeWindow();
 }
 function showInfo() {
     const infoContent = `

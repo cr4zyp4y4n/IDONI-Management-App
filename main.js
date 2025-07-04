@@ -18,9 +18,10 @@ function createMainWindow() {
     minWidth: 1100,
     minHeight: 700,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+      enableRemoteModule: false
     },
     icon: iconPath,
     title: 'IDONI Kronos',
@@ -58,9 +59,10 @@ function createExcelWindow() {
     width: 1400,
     height: 900,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+      enableRemoteModule: false
     },
     icon: iconPath,
     title: 'IDONI Kronos',
@@ -97,9 +99,10 @@ function createRecipeWindow() {
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+      enableRemoteModule: false
     },
     icon: iconPath,
     title: 'IDONI Kronos',
@@ -227,12 +230,10 @@ ipcMain.handle('export-pdf', async (event, buffer, fileName) => {
 // IPC handlers para comunicación entre ventanas
 ipcMain.handle('open-excel-window', () => {
   createExcelWindow();
-  return true;
 });
 
 ipcMain.handle('open-recipe-window', () => {
   createRecipeWindow();
-  return true;
 });
 
 ipcMain.handle('close-excel-window', () => {
