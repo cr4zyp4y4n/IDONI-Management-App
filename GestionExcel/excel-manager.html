@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDONI - Gestor de Excel</title>
+    <title>IDONI Kronos - Gestor de Excel</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../assets/idoni-icon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/idoni-icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/idoni-icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/idoni-icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/idoni-icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/idoni-icon-180.png">
+    
     <link rel="stylesheet" href="../styles/common.css">
     <link rel="stylesheet" href="excel-manager.css">
 </head>
@@ -26,6 +35,9 @@
             </button>
             <button class="nav-button help-button" onclick="showHelp()" title="Ayuda">
                 <i data-feather="help-circle"></i>
+            </button>
+            <button class="nav-button" id="toggle-darkmode" title="Modo oscuro/claro">
+                <i data-feather="moon"></i>
             </button>
         </div>
     </div>
@@ -210,6 +222,27 @@
             
             // Inicializar animaciones de controles
             initializeControlAnimations();
+
+            // Toggle dark mode
+            const darkBtn = document.getElementById('toggle-darkmode');
+            function setDarkMode(on) {
+                if (on) {
+                    document.body.classList.add('dark-mode');
+                    darkBtn.innerHTML = '<i data-feather="sun"></i>';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    darkBtn.innerHTML = '<i data-feather="moon"></i>';
+                }
+                feather.replace();
+            }
+            // Cargar preferencia
+            const darkPref = localStorage.getItem('idoni-darkmode') === 'true';
+            setDarkMode(darkPref);
+            darkBtn.onclick = function() {
+                const isDark = document.body.classList.toggle('dark-mode');
+                localStorage.setItem('idoni-darkmode', isDark);
+                setDarkMode(isDark);
+            };
         });
 
         // Funciones para animaciones de drag & drop

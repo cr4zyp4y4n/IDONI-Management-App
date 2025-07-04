@@ -153,8 +153,23 @@ function updateAllergens() {
             tag.textContent = allergen;
             allergensList.appendChild(tag);
         });
+        // Mensaje de advertencia
+        const warning = document.createElement('div');
+        warning.className = 'alert-warning';
+        warning.textContent = 'Recuerda informar a los clientes sobre la presencia de estos alérgenos antes del servicio.';
+        allergensList.appendChild(warning);
+    } else if (allergensText.trim() === '') {
+        // Mensaje informativo si no se han especificado alérgenos
+        const info = document.createElement('div');
+        info.className = 'alert-info';
+        info.textContent = 'No se han especificado alérgenos';
+        allergensList.appendChild(info);
     } else {
-        allergensList.innerHTML = '<p style="color: #666; font-style: italic;">No se han especificado alérgenos</p>';
+        // Mensaje de éxito si no hay alérgenos
+        const success = document.createElement('div');
+        success.className = 'alert-success';
+        success.textContent = 'Este plato no contiene alérgenos identificados en los ingredientes especificados.';
+        allergensList.appendChild(success);
     }
 }
 
@@ -206,12 +221,12 @@ function handleImageUpload(e) {
 function updateImagePreview() {
     const preview = document.getElementById('image-preview');
     const clearImageBtn = document.getElementById('clear-image');
-    
+    const imageLabel = document.querySelector('.image-upload-label');
     if (!preview) return;
-    
     preview.innerHTML = '';
-    
     if (currentRecipeImage) {
+        // Ocultar icono y texto de subir foto
+        if (imageLabel) imageLabel.style.display = 'none';
         const img = document.createElement('img');
         img.src = currentRecipeImage;
         img.alt = 'Foto del plato';
@@ -220,17 +235,17 @@ function updateImagePreview() {
         img.style.borderRadius = '8px';
         img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
         preview.appendChild(img);
-        
         if (clearImageBtn) {
             clearImageBtn.disabled = false;
         }
     } else {
+        // Mostrar icono y texto de subir foto
+        if (imageLabel) imageLabel.style.display = 'block';
         const span = document.createElement('span');
         span.textContent = 'Sin foto seleccionada';
         span.style.color = '#bbb';
         span.style.fontStyle = 'italic';
         preview.appendChild(span);
-        
         if (clearImageBtn) {
             clearImageBtn.disabled = true;
         }
@@ -291,6 +306,8 @@ function saveRecipeInternal() {
     
     updateHistoryTable();
     
+    updateSidebarStats();
+    
     return true;
 }
 
@@ -334,6 +351,8 @@ function createNewRecipe() {
     if (nameInput) {
         nameInput.focus();
     }
+    
+    updateSidebarStats();
     
     showNotification('Nueva ficha técnica creada', 'info');
 }
@@ -900,6 +919,8 @@ function duplicateSelectedRecipe() {
     
     clearAutoSave();
     
+    updateSidebarStats();
+    
     showNotification('📋 Ficha duplicada lista para guardar', 'success');
 }
 
@@ -911,11 +932,10 @@ function deleteRecipe(index) {
         savedRecipes.splice(index, 1);
         saveRecipesLocally();
         updateHistoryTable();
-        
+        updateSidebarStats();
         if (currentRecipe && currentRecipe.timestamp === recipe.timestamp) {
             createNewRecipe();
         }
-        
         showNotification('🗑️ Ficha eliminada', 'success');
     }
 }
@@ -970,6 +990,7 @@ function loadSavedData() {
         if (savedRecipesData) {
             savedRecipes = JSON.parse(savedRecipesData);
             updateHistoryTable();
+            updateSidebarStats();
         }
         
         const tempRecipe = localStorage.getItem('idoni-temp-recipe');
@@ -1075,4 +1096,43 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof feather !== 'undefined') {
         feather.replace();
     }
-}); 
+});
+
+function updateSidebarStats() {
+    // Fichas guardadas
+    const recipeCount = savedRecipes.length;
+    // Ingredientes totales
+    let ingredientsCount = 0;
+    // Coste promedio
+    let totalCost = 0;
+    // Última modificación
+    let lastModified = '-';
+    let lastTimestamp = null;
+
+    savedRecipes.forEach(recipe => {
+        if (Array.isArray(recipe.ingredients)) {
+            ingredientsCount += recipe.ingredients.length;
+        }
+        if (typeof recipe.grandTotal === 'number') {
+            totalCost += recipe.grandTotal;
+        }
+        if (recipe.timestamp && (!lastTimestamp || recipe.timestamp > lastTimestamp)) {
+            lastTimestamp = recipe.timestamp;
+        }
+    });
+
+    const avgCost = recipeCount > 0 ? (totalCost / recipeCount) : 0;
+    if (lastTimestamp) {
+        const date = new Date(lastTimestamp);
+        lastModified = date.toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' });
+    }
+
+    const recipeCountEl = document.getElementById('recipe-count');
+    const ingredientsCountEl = document.getElementById('ingredients-count');
+    const avgCostEl = document.getElementById('avg-cost');
+    const lastModifiedEl = document.getElementById('last-modified');
+    if (recipeCountEl) recipeCountEl.textContent = recipeCount;
+    if (ingredientsCountEl) ingredientsCountEl.textContent = ingredientsCount;
+    if (avgCostEl) avgCostEl.textContent = avgCost.toFixed(2) + ' €';
+    if (lastModifiedEl) lastModifiedEl.textContent = lastModified;
+} 

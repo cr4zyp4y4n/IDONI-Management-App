@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+// Configurar el icono de la aplicación
+const iconPath = path.resolve(__dirname, 'assets', 'idoni-icon-512.png');
+
 let mainWindow;
 let excelWindow;
 let recipeWindow;
@@ -10,21 +13,30 @@ let recipeWindow;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
+    minWidth: 1100,
+    minHeight: 700,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true
     },
-    icon: path.join(__dirname, 'assets', 'icon.png'),
-    title: 'IDONI App - Menú Principal',
+    icon: iconPath,
+    title: 'IDONI Kronos',
     resizable: true,
     minimizable: true,
-    maximizable: true
+    maximizable: true,
+    show: false
   });
 
   mainWindow.loadFile('MainMenu/main-menu.html');
+
+  // Mostrar la ventana maximizada cuando esté lista
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.maximize();
+    mainWindow.show();
+  });
 
   // Abrir DevTools en desarrollo
   if (process.argv.includes('--dev')) {
@@ -50,14 +62,20 @@ function createExcelWindow() {
       contextIsolation: false,
       enableRemoteModule: true
     },
-    icon: path.join(__dirname, 'assets', 'icon.png'),
-    title: 'IDONI App - Gestor de Excel',
+    icon: iconPath,
+    title: 'IDONI Kronos',
     resizable: true,
     minimizable: true,
-    maximizable: true
+    maximizable: true,
+    show: false
   });
 
   excelWindow.loadFile('GestionExcel/excel-manager.html');
+
+  // Mostrar la ventana cuando esté lista
+  excelWindow.once('ready-to-show', () => {
+    excelWindow.show();
+  });
 
   // Abrir DevTools en desarrollo
   if (process.argv.includes('--dev')) {
@@ -83,14 +101,20 @@ function createRecipeWindow() {
       contextIsolation: false,
       enableRemoteModule: true
     },
-    icon: path.join(__dirname, 'assets', 'icon.png'),
-    title: 'IDONI App - Fichas Técnicas',
+    icon: iconPath,
+    title: 'IDONI Kronos',
     resizable: true,
     minimizable: true,
-    maximizable: true
+    maximizable: true,
+    show: false
   });
 
   recipeWindow.loadFile('FichaTecnica/recipe-cards.html');
+
+  // Mostrar la ventana cuando esté lista
+  recipeWindow.once('ready-to-show', () => {
+    recipeWindow.show();
+  });
 
   // Abrir DevTools en desarrollo
   if (process.argv.includes('--dev')) {
@@ -102,7 +126,13 @@ function createRecipeWindow() {
   });
 }
 
-app.whenReady().then(createMainWindow);
+app.whenReady().then(() => {
+  // Configurar el icono de la aplicación
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('com.idoni.kronos');
+  }
+  createMainWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -214,4 +244,10 @@ ipcMain.handle('close-excel-window', () => {
 
 ipcMain.handle('get-window-count', () => {
   return BrowserWindow.getAllWindows().length;
+});
+
+ipcMain.handle('close-recipe-window', (event) => {
+  if (recipeWindow) {
+    recipeWindow.close();
+  }
 }); 

@@ -47,5 +47,182 @@ function openRecipeWindow() {
     ipcRenderer.invoke('open-recipe-window');
 }
 function showInfo() {
-    alert('IDONI App\n\nGestión de Excel y Fichas Técnicas de Cocina.\n© IDONI 2024. Todos los derechos reservados.');
+    const infoContent = `
+        <div style="max-width: 500px; line-height: 1.6;">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                🚀 IDONI KRONOS
+            </h3>
+            
+            <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                📊 GESTOR DE EXCEL:
+            </h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li>Análisis avanzado de productos</li>
+                <li>Filtros inteligentes por categorías</li>
+                <li>Vista simplificada y completa</li>
+                <li>Exportación de datos filtrados</li>
+            </ul>
+            
+            <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                👨‍🍳 FICHAS TÉCNICAS:
+            </h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li>Gestión profesional de recetas</li>
+                <li>Cálculo automático de costes</li>
+                <li>Detección de alérgenos</li>
+                <li>Exportación a HTML y PDF</li>
+            </ul>
+            
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <strong>Versión:</strong> 1.0.0<br>
+                    <strong>Desarrollado por:</strong> IDONI Project<br>
+                    <strong>© 2024</strong> Todos los derechos reservados
+                </p>
+            </div>
+        </div>
+    `;
+    
+    showModal('Información del Sistema', infoContent);
+}
+
+function showHelp() {
+    const helpContent = `
+        <div style="max-width: 500px; line-height: 1.6;">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                ❓ CENTRO DE AYUDA
+            </h3>
+            
+            <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                🎯 CÓMO USAR:
+            </h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li><strong>Gestor de Excel:</strong> Carga archivos Excel y analiza datos</li>
+                <li><strong>Fichas Técnicas:</strong> Crea y gestiona recetas profesionales</li>
+                <li><strong>Drag & Drop:</strong> Arrastra archivos directamente</li>
+                <li><strong>Filtros:</strong> Usa los filtros avanzados para encontrar datos</li>
+            </ul>
+            
+            <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                💡 CONSEJOS:
+            </h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li>Los datos se guardan automáticamente</li>
+                <li>Usa Ctrl+F para búsqueda rápida</li>
+                <li>Exporta tus resultados en múltiples formatos</li>
+                <li>Consulta la información del sistema para más detalles</li>
+            </ul>
+        </div>
+    `;
+    
+    showModal('Centro de Ayuda', helpContent);
+}
+
+function showSettings() {
+    const settingsContent = `
+        <div style="max-width: 500px; line-height: 1.6;">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                ⚙️ CONFIGURACIÓN
+            </h3>
+            
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Las opciones de configuración estarán disponibles en futuras versiones.
+            </p>
+            
+            <div style="background: var(--background-light); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">
+                    🔮 PRÓXIMAMENTE:
+                </h4>
+                <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-secondary);">
+                    <li>Temas de color personalizables</li>
+                    <li>Configuración de idioma</li>
+                    <li>Preferencias de exportación</li>
+                    <li>Atajos de teclado personalizados</li>
+                </ul>
+            </div>
+        </div>
+    `;
+    
+    showModal('Configuración', settingsContent);
+}
+
+function showModal(title, content) {
+    // Crear modal personalizado
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+    `;
+    
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content';
+    modalContent.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: var(--radius-lg);
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-xl);
+        position: relative;
+    `;
+    
+    modalContent.innerHTML = `
+        <h2 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.5rem;">${title}</h2>
+        ${content}
+    `;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '×';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    `;
+    
+    closeBtn.onmouseover = () => {
+        closeBtn.style.background = 'var(--background-light)';
+        closeBtn.style.color = 'var(--text-primary)';
+    };
+    
+    closeBtn.onmouseout = () => {
+        closeBtn.style.background = 'none';
+        closeBtn.style.color = 'var(--text-secondary)';
+    };
+    
+    closeBtn.onclick = () => {
+        document.body.removeChild(modal);
+    };
+    
+    modalContent.appendChild(closeBtn);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+    
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
 } 

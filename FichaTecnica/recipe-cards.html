@@ -3,24 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDONI - Fichas Técnicas</title>
+    <title>IDONI Kronos - Fichas Técnicas</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../assets/idoni-icon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/idoni-icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/idoni-icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/idoni-icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/idoni-icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/idoni-icon-180.png">
+    
     <link rel="stylesheet" href="../styles/common.css">
     <link rel="stylesheet" href="recipe-cards.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header Moderno -->
     <div class="recipe-header">
-        <h1>
-            👨‍🍳 Fichas Técnicas
-            <span style="font-size: 1rem; opacity: 0.8;">| Gestión de Recetas</span>
-        </h1>
-        <div class="subtitle">
-            Crea y gestiona fichas técnicas profesionales para tus platos
+        <div class="header-content">
+            <h1>
+                <i data-feather="book-open"></i>
+                Gestión Fichas Técnicas
+            </h1>
+            <div class="subtitle">
+                Control profesional de recetas y escandallos
+            </div>
         </div>
         <div class="recipe-nav">
-            <button class="nav-button" onclick="window.history.back()">🏠 Volver al Menú</button>
-            <button class="nav-button" onclick="showHelp()">❓ Ayuda</button>
-            <button class="nav-button" onclick="showShortcuts()">⌨️ Atajos</button>
+            <button class="nav-button" onclick="goBackToMainMenu()">
+                <i data-feather="arrow-left"></i>
+                Volver
+            </button>
+            <button class="nav-button help-button" onclick="showHelp()" title="Ayuda">
+                <i data-feather="help-circle"></i>
+            </button>
+            <button class="nav-button" id="toggle-darkmode" title="Modo oscuro/claro">
+                <i data-feather="moon"></i>
+            </button>
         </div>
     </div>
 
@@ -31,7 +49,7 @@
             <form id="recipe-form">
                 <!-- Información del Plato -->
                 <div class="form-section">
-                    <h3>🍽️ Información del Plato</h3>
+                    <h3><i data-feather="file-text"></i> Información del Plato</h3>
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="recipe-name">Nombre del Plato:</label>
@@ -42,10 +60,10 @@
 
                 <!-- Foto del Plato -->
                 <div class="form-section">
-                    <h3>📸 Foto del Plato (opcional)</h3>
+                    <h3><i data-feather="image"></i> Foto del Plato (opcional)</h3>
                     <div class="image-section">
                         <label for="recipe-image" class="image-upload-label">
-                            <div class="image-upload-icon">📷</div>
+                            <div class="image-upload-icon"><i data-feather="image"></i></div>
                             <div class="image-upload-text">Haz clic para añadir foto</div>
                             <div class="image-upload-subtext">Formatos: JPG, PNG (máx. 5MB)</div>
                         </label>
@@ -54,14 +72,14 @@
                             <span style="color: #bbb; font-style: italic;">Sin foto seleccionada</span>
                         </div>
                         <button type="button" id="clear-image" class="action-btn btn-secondary" style="margin-top: 1rem; width: auto;">
-                            🧹 Limpiar Imagen
+                            <i data-feather="trash-2"></i> Limpiar Imagen
                         </button>
                     </div>
                 </div>
 
                 <!-- Ingredientes y Costes -->
                 <div class="form-section">
-                    <h3>🥘 Ingredientes y Costes</h3>
+                    <h3><i data-feather="list"></i> Ingredientes y Costes</h3>
                     <div class="ingredients-table-container">
                         <table class="ingredients-table">
                             <thead>
@@ -79,19 +97,19 @@
                                     <td><input type="number" placeholder="0" class="ingredient-weight" step="0.1" min="0"></td>
                                     <td><input type="number" placeholder="0.00" class="ingredient-cost" step="0.01" min="0"></td>
                                     <td><input type="number" placeholder="0.00" class="ingredient-expenses" step="0.01" min="0"></td>
-                                    <td><button type="button" class="remove-ingredient">🗑️</button></td>
+                                    <td><button type="button" class="remove-ingredient"><i data-feather="trash-2"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
                         <button type="button" id="add-ingredient" class="add-ingredient-btn">
-                            ➕ Añadir Ingrediente
+                            <i data-feather="plus-circle"></i> Añadir Ingrediente
                         </button>
                     </div>
                 </div>
 
                 <!-- Alérgenos -->
                 <div class="form-section">
-                    <h3>⚠️ Alérgenos del Plato</h3>
+                    <h3><i data-feather="alert-triangle"></i> Alérgenos del Plato</h3>
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="recipe-allergens">Alérgenos (separados por comas):</label>
@@ -101,14 +119,14 @@
                     <div class="allergens-section">
                         <h4>Alérgenos Detectados:</h4>
                         <div id="allergens-list">
-                            <p style="color: #666; font-style: italic;">No se han especificado alérgenos</p>
+                            <div class="alert-info" style="display:none;">No se han especificado alérgenos</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Resumen de Costes -->
                 <div class="cost-summary">
-                    <h4>💰 Resumen de Costes</h4>
+                    <h4><i data-feather="dollar-sign"></i> Resumen de Costes</h4>
                     <div class="summary-grid">
                         <div class="summary-item">
                             <div class="summary-label">Total Peso</div>
@@ -132,16 +150,16 @@
                 <!-- Acciones del Formulario -->
                 <div class="form-actions">
                     <button type="submit" class="action-btn btn-primary">
-                        💾 Guardar Ficha
+                        <i data-feather="save"></i> Guardar Ficha
                     </button>
                     <button type="button" id="save-and-new" class="action-btn btn-success">
-                        💾➕ Guardar y Nueva
+                        <i data-feather="save"></i><i data-feather="plus-circle"></i> Guardar y Nueva
                     </button>
                     <button type="button" id="new-recipe" class="action-btn btn-secondary">
-                        🆕 Nueva Ficha
+                        <i data-feather="file-plus"></i> Nueva Ficha
                     </button>
                     <button type="reset" class="action-btn btn-secondary">
-                        🗑️ Limpiar
+                        <i data-feather="trash-2"></i> Limpiar
                     </button>
                 </div>
             </form>
@@ -149,7 +167,7 @@
             <!-- Historial de Fichas -->
             <div class="history-section">
                 <div class="history-header">
-                    <div class="history-title">📚 Historial de Fichas</div>
+                    <div class="history-title"><i data-feather="book"></i> Historial de Fichas</div>
                     <input type="text" class="history-search" id="history-search" placeholder="Buscar en el historial...">
                 </div>
                 <div class="history-table-container">
@@ -179,23 +197,23 @@
         <div class="sidebar">
             <!-- Acciones Rápidas -->
             <div class="sidebar-section">
-                <div class="sidebar-title">⚡ Acciones Rápidas</div>
+                <div class="sidebar-title"><i data-feather="zap"></i> Acciones Rápidas</div>
                 <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                     <button class="action-btn btn-export" id="export-recipe" disabled>
-                        📄 Exportar HTML
+                        <i data-feather="file-text"></i> Exportar HTML
                     </button>
                     <button class="action-btn btn-print" id="print-recipe" disabled>
-                        🖨️ Imprimir
+                        <i data-feather="printer"></i> Imprimir
                     </button>
                     <button class="action-btn btn-success" id="duplicate-recipe" disabled>
-                        📋 Duplicar
+                        <i data-feather="copy"></i> Duplicar
                     </button>
                 </div>
             </div>
 
             <!-- Estadísticas -->
             <div class="sidebar-section">
-                <div class="sidebar-title">📊 Estadísticas</div>
+                <div class="sidebar-title"><i data-feather="bar-chart-2"></i> Estadísticas</div>
                 <div style="font-size: 0.9rem; color: #666; line-height: 1.4;">
                     <p>• Fichas guardadas: <span id="recipe-count">0</span></p>
                     <p>• Ingredientes totales: <span id="ingredients-count">0</span></p>
@@ -206,60 +224,169 @@
 
             <!-- Información -->
             <div class="sidebar-section">
-                <div class="sidebar-title">ℹ️ Información</div>
+                <div class="sidebar-title"><i data-feather="info"></i> Información</div>
                 <div style="font-size: 0.85rem; color: #666; line-height: 1.4;">
                     <p>• Los datos se guardan automáticamente</p>
-                    <p>• Usa Ctrl+S para guardar rápidamente</p>
-                    <p>• Ctrl+N para nueva ficha</p>
-                    <p>• Ctrl+D para duplicar seleccionada</p>
-                    <p>• Escape para limpiar selección</p>
-                </div>
-            </div>
-
-            <!-- Vista Previa -->
-            <div class="sidebar-section">
-                <div class="sidebar-title">👁️ Vista Previa</div>
-                <div id="recipe-preview" style="background: white; border-radius: 10px; padding: 1rem; border: 1px solid #e1efd6;">
-                    <div id="preview-content">
-                        <p style="color: #666; font-style: italic; text-align: center;">Vista previa no disponible</p>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="recipe-cards.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            // Toggle dark mode
+            const darkBtn = document.getElementById('toggle-darkmode');
+            function setDarkMode(on) {
+                if (on) {
+                    document.body.classList.add('dark-mode');
+                    darkBtn.innerHTML = '<i data-feather="sun"></i>';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    darkBtn.innerHTML = '<i data-feather="moon"></i>';
+                }
+                feather.replace();
+            }
+            // Cargar preferencia
+            const darkPref = localStorage.getItem('idoni-darkmode') === 'true';
+            setDarkMode(darkPref);
+            darkBtn.onclick = function() {
+                const isDark = document.body.classList.toggle('dark-mode');
+                localStorage.setItem('idoni-darkmode', isDark);
+                setDarkMode(isDark);
+            };
+        });
+        
+        // Función para volver al menú principal usando Electron
+        function goBackToMainMenu() {
+            const { ipcRenderer } = require('electron');
+            ipcRenderer.invoke('close-recipe-window');
+        }
+        
         function showHelp() {
-            alert(`👨‍🍳 GUÍA DE FICHAS TÉCNICAS
-
-🎯 FUNCIONES PRINCIPALES:
-• Crear fichas técnicas completas
-• Gestionar ingredientes y costes
-• Añadir fotos de los platos
-• Control de alérgenos automático
-• Historial completo de fichas
-
-📋 CREACIÓN DE FICHAS:
-• Nombre del plato (obligatorio)
-• Foto opcional (máx. 5MB)
-• Ingredientes con peso y costes
-• Alérgenos separados por comas
-• Cálculo automático de costes
-
-💾 GESTIÓN:
-• Guardado automático cada 30s
-• Historial con búsqueda
-• Duplicación de fichas
-• Exportación a HTML
-• Impresión directa
-
-💡 CONSEJOS:
-• Usa Ctrl+S para guardar rápido
-• Ctrl+N para nueva ficha
-• Ctrl+D para duplicar
-• Escape para limpiar selección
-• Los datos se sincronizan automáticamente`);
+            const helpContent = `
+                <div style="max-width: 500px; line-height: 1.6;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                        <i data-feather="book-open"></i> GUÍA DE FICHAS TÉCNICAS
+                    </h3>
+                    
+                    <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                        <i data-feather="target"></i> FUNCIONES PRINCIPALES:
+                    </h4>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Crear fichas técnicas completas</li>
+                        <li>Gestionar ingredientes y costes</li>
+                        <li>Añadir fotos de los platos</li>
+                        <li>Control de alérgenos automático</li>
+                        <li>Historial completo de fichas</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                        <i data-feather="file-text"></i> CREACIÓN DE FICHAS:
+                    </h4>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Nombre del plato (obligatorio)</li>
+                        <li>Foto opcional (máx. 5MB)</li>
+                        <li>Ingredientes con peso y costes</li>
+                        <li>Alérgenos separados por comas</li>
+                        <li>Cálculo automático de costes</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+                        <i data-feather="save"></i> GESTIÓN:
+                    </h4>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Guardado automático cada 30s</li>
+                        <li>Historial con búsqueda</li>
+                        <li>Duplicación de fichas</li>
+                        <li>Exportación a HTML</li>
+                        <li>Impresión directa</li>
+                    </ul>
+                </div>
+            `;
+            
+            // Crear modal personalizado
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+            modalContent.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: var(--radius-lg);
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: var(--shadow-lg);
+                position: relative;
+            `;
+            
+            modalContent.innerHTML = helpContent;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '×';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--text-secondary);
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            `;
+            
+            closeBtn.onmouseover = () => {
+                closeBtn.style.background = 'var(--background-light)';
+                closeBtn.style.color = 'var(--text-primary)';
+            };
+            
+            closeBtn.onmouseout = () => {
+                closeBtn.style.background = 'none';
+                closeBtn.style.color = 'var(--text-secondary)';
+            };
+            
+            closeBtn.onclick = () => {
+                document.body.removeChild(modal);
+            };
+            
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+            
+            // Renderizar iconos Feather
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
         }
 
         function showShortcuts() {

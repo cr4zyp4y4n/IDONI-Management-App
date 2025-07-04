@@ -923,8 +923,9 @@ function updatePaginationControls() {
         }
     }
 
+    // Eliminar color inline y usar solo clases
     paginationContainer.innerHTML = `
-        <div style="color: #405e47; font-weight: 600;">
+        <div class="pagination-info">
             Mostrando ${startRecord}-${endRecord} de ${filteredData.length} registros
         </div>
         <div style="display: flex; gap: 0.5rem; align-items: center;">

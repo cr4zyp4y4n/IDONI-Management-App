@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDONI App - Centro de Control</title>
+    <title>IDONI Kronos - Centro de Control</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../assets/idoni-icon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/idoni-icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/idoni-icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/idoni-icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/idoni-icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/idoni-icon-180.png">
+    
     <link rel="stylesheet" href="../styles/common.css">
     <link rel="stylesheet" href="main-menu.css">
 </head>
@@ -19,22 +28,114 @@
         <div class="splash-greeting" id="splash-greeting">¡Buenos días, Cristina!</div>
     </div>
     <div class="main-container" id="main-menu" style="display:none;">
+        <!-- Header Elegante -->
         <div class="header-section fade-in-up">
-            <div class="logo" id="idoni-logo">IDONI</div>
+            <div class="logo-container">
+                <div class="logo" id="idoni-logo">
+                    <span class="logo-letter">I</span>
+                    <span class="logo-letter">D</span>
+                    <span class="logo-letter">O</span>
+                    <span class="logo-letter">N</span>
+                    <span class="logo-letter">I</span>
+                </div>
+                <div class="logo-subtitle">KRONOS</div>
+            </div>
+            <div class="header-divider"></div>
+            <div class="header-tagline">Centro de Control Empresarial</div>
         </div>
-        <div class="access-buttons fade-in-up">
-            <button class="access-btn excel-btn" onclick="openExcelWindow()" title="Gestor de Excel">
-                Gestor de Excel
-            </button>
-            <button class="access-btn recipe-btn" onclick="openRecipeWindow()" title="Fichas Técnicas">
-                Fichas Técnicas
-            </button>
-            <button class="access-btn info-btn" onclick="showInfo()" title="Información">
-                Información
-            </button>
+
+        <!-- Panel Principal -->
+        <div class="main-panel fade-in-up delay-1">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <i data-feather="command"></i>
+                    Módulos Principales
+                </h2>
+                <p class="panel-description">Accede a las herramientas profesionales de gestión</p>
+            </div>
+
+            <!-- Botones de Acceso -->
+            <div class="access-grid">
+                <button class="access-card excel-card" onclick="openExcelWindow()" title="Gestor de Excel">
+                    <div class="card-icon">
+                        <i data-feather="bar-chart-2"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Gestor de Excel</h3>
+                        <p class="card-description">Análisis avanzado y gestión de datos empresariales</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Filtros Avanzados</span>
+                            <span class="feature-tag">Vista Simplificada</span>
+                            <span class="feature-tag">Exportación</span>
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        <i data-feather="arrow-right"></i>
+                    </div>
+                </button>
+
+                <button class="access-card recipe-card" onclick="openRecipeWindow()" title="Fichas Técnicas">
+                    <div class="card-icon">
+                        <i data-feather="file-text"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fichas Técnicas</h3>
+                        <p class="card-description">Gestión profesional de recetas y costes</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Cálculo Automático</span>
+                            <span class="feature-tag">Alérgenos</span>
+                            <span class="feature-tag">Exportación PDF</span>
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        <i data-feather="arrow-right"></i>
+                    </div>
+                </button>
+            </div>
         </div>
-        <div class="footer-text">© IDONI 2024. Todos los derechos reservados.</div>
+
+        <!-- Panel Secundario -->
+        <div class="secondary-panel fade-in-up delay-2">
+            <div class="quick-actions">
+                <button class="quick-action-btn" onclick="showInfo()" title="Información del Sistema">
+                    <i data-feather="info"></i>
+                    <span>Información</span>
+                </button>
+                <button class="quick-action-btn" onclick="showHelp()" title="Ayuda">
+                    <i data-feather="help-circle"></i>
+                    <span>Ayuda</span>
+                </button>
+                <button class="quick-action-btn" onclick="showSettings()" title="Configuración">
+                    <i data-feather="settings"></i>
+                    <span>Configuración</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Empresarial -->
+        <div class="footer-section fade-in-up delay-3">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <span class="footer-version">v1.0.0</span>
+                    <span class="footer-separator">•</span>
+                    <span class="footer-copyright">© 2024 IDONI Project</span>
+                </div>
+                <div class="footer-status">
+                    <span class="status-indicator">
+                        <i data-feather="check-circle"></i>
+                        Sistema Operativo
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="https://unpkg.com/feather-icons"></script>
     <script src="main-menu.js"></script>
+    <script>
+        // Inicializar Feather Icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+    </script>
 </body>
 </html> 

@@ -21,6 +21,113 @@
     --radius-lg: 0.75rem;
 }
 
+/* === MODO OSCURO === */
+body.dark-mode {
+    --primary-color: #2563eb;
+    --primary-hover: #3b82f6;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --background-light: #181a1b;
+    --background-white: #23272a;
+    --border-color: #333a40;
+    --text-primary: #f3f4f6;
+    --text-secondary: #b0b3b8;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.25);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35), 0 2px 4px -2px rgb(0 0 0 / 0.25);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.35), 0 4px 6px -4px rgb(0 0 0 / 0.25);
+}
+body.dark-mode, body.dark-mode .main-content, body.dark-mode .data-content, body.dark-mode .sidebar, body.dark-mode .sidebar-section {
+    background: var(--background-light) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+body.dark-mode .excel-header, body.dark-mode .filters-panel, body.dark-mode .table-controls, body.dark-mode .table-wrapper, body.dark-mode .pagination, body.dark-mode .sidebar {
+    background: var(--background-white) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+body.dark-mode .excel-header h1, body.dark-mode .sidebar-title, body.dark-mode .filters-title {
+    color: var(--text-primary) !important;
+}
+body.dark-mode .action-btn, body.dark-mode .filter-btn, body.dark-mode .pagination-btn, body.dark-mode .nav-button {
+    background: #23272a !important;
+    color: #f3f4f6 !important;
+    border: 1px solid #333a40 !important;
+}
+body.dark-mode .action-btn.btn-load, body.dark-mode .filter-btn-primary {
+    background: #2563eb !important;
+    color: #fff !important;
+}
+body.dark-mode .action-btn.btn-save {
+    background: #10b981 !important;
+    color: #fff !important;
+}
+body.dark-mode .action-btn.btn-clear {
+    background: #ef4444 !important;
+    color: #fff !important;
+}
+body.dark-mode .action-btn.btn-toggle, body.dark-mode .filter-btn-secondary {
+    background: #64748b !important;
+    color: #fff !important;
+}
+body.dark-mode .action-btn:hover, body.dark-mode .filter-btn:hover, body.dark-mode .pagination-btn:hover, body.dark-mode .nav-button:hover {
+    background: #181a1b !important;
+    color: #2563eb !important;
+    border-color: #2563eb !important;
+}
+body.dark-mode .data-table, body.dark-mode .data-table th, body.dark-mode .data-table td {
+    background: #23272a !important;
+    color: #f3f4f6 !important;
+    border-color: #333a40 !important;
+}
+body.dark-mode .data-table th {
+    background: #181a1b !important;
+    color: #2563eb !important;
+}
+body.dark-mode .data-table tbody tr:nth-child(even) {
+    background: #23272a !important;
+}
+body.dark-mode .data-table tbody tr:hover {
+    background: #181a1b !important;
+}
+body.dark-mode .notification {
+    background: #23272a !important;
+    color: #fff !important;
+    border: 1.5px solid #2563eb !important;
+}
+body.dark-mode .modal-content {
+    background: #23272a !important;
+    color: #f3f4f6 !important;
+}
+body.dark-mode ::selection {
+    background: #2563eb;
+    color: #fff;
+}
+body.dark-mode html, body.dark-mode body {
+    background: var(--background-light) !important;
+}
+body.dark-mode .pagination-info {
+    color: var(--text-primary) !important;
+}
+body.dark-mode .drop-zone {
+    background: var(--background-white) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--primary-color) !important;
+}
+body.dark-mode .drop-zone-text {
+    color: var(--primary-color) !important;
+}
+body.dark-mode .drop-zone-subtext, body.dark-mode .drop-zone-formats {
+    color: var(--text-secondary) !important;
+}
+body.dark-mode .drop-zone.drag-over {
+    background: linear-gradient(135deg, var(--primary-color), #3b82f6) !important;
+    color: white !important;
+    border-color: white !important;
+}
+
 /* ===== HEADER MODERNO ===== */
 .excel-header {
     background: linear-gradient(135deg, var(--primary-color), #3b82f6);
@@ -153,6 +260,7 @@
     padding: 0 1.5rem;
     min-height: calc(100vh - 200px);
     animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #f8fafc !important;
 }
 
 @keyframes fadeInUp {
@@ -244,6 +352,8 @@
     top: 1.5rem;
     width: 280px;
     animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 #fff;
 }
 
 .sidebar-section {
@@ -540,6 +650,9 @@
     box-shadow: var(--shadow-sm);
     overflow: hidden;
     animation: contentFadeIn 0.7s ease;
+    background: #f8fafc !important;
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 #fff;
 }
 
 .data-header {
@@ -1678,4 +1791,52 @@
         opacity: 0;
         transform: scale(0.85);
     }
+}
+
+/* Scrollbar general neutro */
+body, .main-content, .data-content, .sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 #fff;
+}
+body::-webkit-scrollbar, .main-content::-webkit-scrollbar, .data-content::-webkit-scrollbar, .sidebar::-webkit-scrollbar {
+    width: 10px;
+    background: #fff;
+}
+body::-webkit-scrollbar-thumb, .main-content::-webkit-scrollbar-thumb, .data-content::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 6px;
+}
+body::-webkit-scrollbar-thumb:hover, .main-content::-webkit-scrollbar-thumb:hover, .data-content::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+}
+
+/* Limpiar fondos verdes del header y body */
+body {
+    background: var(--background-light) !important;
+}
+.excel-header {
+    background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Eliminar cualquier fondo o sombra verde en la parte inferior */
+html {
+    background: var(--background-light) !important;
+}
+
+/* Si existía algún gradiente o sombra verde, queda sobrescrito */
+html, body, .main-content, .data-content {
+    background: var(--background-light) !important;
+}
+body.dark-mode html, body.dark-mode, body.dark-mode .main-content, body.dark-mode .data-content {
+    background: var(--background-light) !important;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100%;
+}
+body {
+    min-height: 100vh;
+    box-sizing: border-box;
 } 

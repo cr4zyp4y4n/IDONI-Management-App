@@ -1,7 +1,7 @@
 {
-  "name": "idoni-app",
+  "name": "idoni-kronos",
   "version": "1.0.0",
-  "description": "Aplicación de gestión de Excel y fichas técnicas de cocina",
+  "description": "IDONI Kronos: gestor de Excel y fichas técnicas para escritorio que te ahorra tiempo.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -19,7 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^28.0.0",
-    "electron-builder": "^24.6.4"
+    "electron-builder": "^24.6.4",
+    "electron-icon-builder": "^2.0.1"
   },
   "dependencies": {
     "feather-icons": "^4.29.2",
@@ -29,8 +30,8 @@
     "xlsx": "^0.18.5"
   },
   "build": {
-    "appId": "com.idoni.app",
-    "productName": "IDONI App",
+    "appId": "com.idoni.kronos",
+    "productName": "IDONI Kronos",
     "directories": {
       "output": "dist"
     },
@@ -39,7 +40,16 @@
       "!node_modules/**/*"
     ],
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "assets/idoni-icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/idoni-icon-512.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/idoni-icon-512.png"
     }
   }
 }
