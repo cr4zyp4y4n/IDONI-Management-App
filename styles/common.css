@@ -1,0 +1,351 @@
+/* Estilos comunes para toda la aplicación IDONI */
+
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8fbf5 0%, #e1efd6 50%, #d4e8c7 100%);
+    color: #405e47;
+    line-height: 1.6;
+}
+
+/* Fuentes locales */
+@font-face {
+    font-family: 'Fredoka Bold';
+    src: url('../fonts/fredoka-bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variables CSS para colores */
+:root {
+    --primary-green: #4CAF50;
+    --primary-green-dark: #45a049;
+    --primary-green-darker: #388E3C;
+    --primary-pink: #ed1566;
+    --primary-pink-dark: #d4145a;
+    --primary-pink-darker: #c0134f;
+    --text-dark: #405e47;
+    --text-medium: #666;
+    --text-light: #888;
+    --bg-light: #f8fbf5;
+    --bg-lighter: #e1efd6;
+    --border-light: #e1efd6;
+    --white: #ffffff;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
+/* Utilidades comunes */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+    color: var(--white);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #757575, #616161);
+    color: var(--white);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: var(--white);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: var(--white);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: var(--white);
+}
+
+/* Formularios comunes */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.8rem;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    outline: none;
+}
+
+/* Cards y contenedores */
+.card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.card-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+/* Tablas comunes */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.table th {
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+    color: var(--white);
+    padding: 1rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.table td {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.85rem;
+}
+
+.table tbody tr:hover {
+    background: var(--bg-light);
+}
+
+/* Notificaciones */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 20px var(--shadow-medium);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease;
+    max-width: 400px;
+}
+
+.notification-success {
+    border-left: 4px solid var(--primary-green);
+}
+
+.notification-error {
+    border-left: 4px solid #f44336;
+}
+
+.notification-info {
+    border-left: 4px solid #2196F3;
+}
+
+.notification-warning {
+    border-left: 4px solid #FF9800;
+}
+
+/* Animaciones */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Clases de utilidad */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+    }
+    
+    .table {
+        font-size: 0.8rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.6rem 0.4rem;
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-green);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-green-dark);
+}
+
+/* Estados de carga */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--primary-green);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 

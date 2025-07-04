@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDONI App - Centro de Control</title>
+    <link rel="stylesheet" href="../styles/common.css">
+    <link rel="stylesheet" href="main-menu.css">
+</head>
+<body>
+    <div id="splash" class="splash-container">
+        <div class="splash-logo" id="splash-logo">
+            <span class="splash-letter">I</span>
+            <span class="splash-letter">D</span>
+            <span class="splash-letter">O</span>
+            <span class="splash-letter">N</span>
+            <span class="splash-letter">I</span>
+        </div>
+        <div class="splash-greeting" id="splash-greeting">¡Buenos días, Cristina!</div>
+    </div>
+    <div class="main-container" id="main-menu" style="display:none;">
+        <div class="header-section fade-in-up">
+            <div class="logo" id="idoni-logo">IDONI</div>
+        </div>
+        <div class="access-buttons fade-in-up">
+            <button class="access-btn excel-btn" onclick="openExcelWindow()" title="Gestor de Excel">
+                Gestor de Excel
+            </button>
+            <button class="access-btn recipe-btn" onclick="openRecipeWindow()" title="Fichas Técnicas">
+                Fichas Técnicas
+            </button>
+            <button class="access-btn info-btn" onclick="showInfo()" title="Información">
+                Información
+            </button>
+        </div>
+        <div class="footer-text">© IDONI 2024. Todos los derechos reservados.</div>
+    </div>
+    <script src="main-menu.js"></script>
+</body>
+</html> 

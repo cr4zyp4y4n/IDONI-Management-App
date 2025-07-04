@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDONI - Gestor de Excel</title>
+    <link rel="stylesheet" href="../styles/common.css">
+    <link rel="stylesheet" href="excel-manager.css">
+</head>
+<body>
+    <!-- Header Moderno -->
+    <div class="excel-header">
+        <div class="header-content">
+            <h1>
+                <i data-feather="bar-chart-2"></i>
+                Gestor de Excel
+            </h1>
+            <div class="subtitle">
+                Análisis Avanzado de Productos
+            </div>
+        </div>
+        <div class="excel-nav">
+            <button class="nav-button" onclick="goBackToMainMenu()">
+                <i data-feather="arrow-left"></i>
+                Volver
+            </button>
+            <button class="nav-button help-button" onclick="showHelp()" title="Ayuda">
+                <i data-feather="help-circle"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Controles Principales -->
+        <div class="main-controls">
+            <div class="controls-left">
+                <button class="action-btn btn-load" id="load-excel">
+                    <i data-feather="upload"></i>
+                    Cargar Excel
+                </button>
+                <button class="action-btn btn-save" id="save-data" disabled>
+                    <i data-feather="save"></i>
+                    Guardar Datos
+                </button>
+                <button class="action-btn btn-clear" id="clear-data" disabled>
+                    <i data-feather="trash-2"></i>
+                    Limpiar Datos
+                </button>
+                <button class="action-btn btn-toggle" id="toggle-view">
+                    <i data-feather="grid"></i>
+                    Vista Simplificada
+                </button>
+            </div>
+            <div class="controls-right">
+                <div class="stats-summary">
+                    <span>
+                        <i data-feather="database"></i> 
+                        Total: <span id="total-records-header">0</span>
+                    </span>
+                    <span>
+                        <i data-feather="filter"></i> 
+                        Filtrados: <span id="filtered-records-header">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Filtros Avanzados -->
+                <div class="sidebar-section">
+                    <div id="filters-panel" class="filters-panel" style="display: none;">
+                        <div class="filters-header">
+                            <div class="filters-title">
+                                <i data-feather="filter"></i> 
+                                Filtros Avanzados
+                            </div>
+                            <div class="filter-badge">
+                                <span id="active-filters-count" style="display: none; background: var(--success-color); color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-tab-content active" id="idoni-filters">
+                            <div class="filter-controls" id="idoni-filter-controls">
+                                <!-- Los filtros IDONI se generarán dinámicamente -->
+                            </div>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <button class="filter-btn filter-btn-primary" id="apply-filters" title="Aplicar filtros">
+                                <i data-feather="check"></i>
+                            </button>
+                            <button class="filter-btn filter-btn-secondary" id="clear-filters" title="Limpiar filtros">
+                                <i data-feather="refresh-cw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Content -->
+            <div class="data-content">
+                <!-- Data Header y controles en una sola línea -->
+                <div class="data-header data-header-flex">
+                    <div class="data-title">
+                        <i data-feather="list"></i> 
+                        Datos de Productos
+                    </div>
+                    <div class="data-controls-flex">
+                        <div class="table-controls-flex" id="table-controls" style="display: none;">
+                            <div class="control-group">
+                                <label for="search-input">
+                                    <i data-feather="search"></i> 
+                                    Buscar:
+                                </label>
+                                <input type="text" id="search-input" placeholder="Buscar en todos los campos...">
+                            </div>
+                            <div class="control-group">
+                                <label for="sort-column">
+                                    <i data-feather="arrow-up-down"></i> 
+                                    Ordenar:
+                                </label>
+                                <select id="sort-column">
+                                    <option value="">Ordenar por...</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="rows-per-page">
+                                    <i data-feather="list"></i> 
+                                    Filas:
+                                </label>
+                                <select id="rows-per-page">
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                    <option value="all">Todas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drop Zone -->
+                <div id="drop-zone" class="drop-zone">
+                    <div class="drop-zone-icon">
+                        <i data-feather="upload-cloud"></i>
+                    </div>
+                    <div class="drop-zone-text">Arrastra tu archivo Excel aquí</div>
+                    <div class="drop-zone-subtext">o haz clic para seleccionar archivo</div>
+                    <div class="drop-zone-formats">
+                        <span>Formatos soportados: .xlsx, .xls</span>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="table-container" id="table-container" style="display: none;">
+                    <!-- Spinner de carga -->
+                    <div class="loading-spinner" id="loading-spinner">
+                        <div class="spinner"></div>
+                        <div style="margin-top: 1rem; text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
+                            Cargando datos...
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead id="table-header">
+                                <!-- Headers se generarán dinámicamente -->
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Datos se generarán dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Pagination SIEMPRE visible debajo de la tabla, DENTRO de data-content -->
+                <div class="pagination" id="pagination" style="display: none;">
+                    <div class="pagination-info">
+                        <span id="pagination-info">Mostrando 1-50 de 0 resultados</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prev-page" disabled>
+                            <i data-feather="chevron-left"></i>
+                            Anterior
+                        </button>
+                        <div class="page-numbers" id="page-numbers">
+                            <!-- Números de página se generarán dinámicamente -->
+                        </div>
+                        <button class="pagination-btn" id="next-page" disabled>
+                            Siguiente
+                            <i data-feather="chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="excel-manager.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        // Inicializar Feather Icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            
+            // Inicializar animaciones de drag & drop
+            initializeDragAnimations();
+            
+            // Inicializar animaciones de controles
+            initializeControlAnimations();
+        });
+
+        // Funciones para animaciones de drag & drop
+        function initializeDragAnimations() {
+            const dropZone = document.getElementById('drop-zone');
+            
+            if (dropZone) {
+                dropZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+                
+                dropZone.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                });
+                
+                dropZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    // Aquí se procesaría el archivo
+                });
+            }
+        }
+
+        // Funciones para animaciones de controles
+        function initializeControlAnimations() {
+            // Animaciones en botones de acción
+            const actionButtons = document.querySelectorAll('.action-btn');
+            actionButtons.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+                
+                btn.addEventListener('mousedown', function() {
+                    this.style.transform = 'translateY(-1px) scale(0.98)';
+                });
+                
+                btn.addEventListener('mouseup', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+            });
+            
+            // Animaciones en controles de tabla
+            const tableControls = document.querySelectorAll('.table-controls-flex input, .table-controls-flex select');
+            tableControls.forEach(control => {
+                control.addEventListener('focus', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                control.addEventListener('blur', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        }
+
+        // Función para mostrar spinner de carga
+        function showLoadingSpinner() {
+            const spinner = document.getElementById('loading-spinner');
+            if (spinner) {
+                spinner.classList.add('active');
+            }
+        }
+
+        // Función para ocultar spinner de carga
+        function hideLoadingSpinner() {
+            const spinner = document.getElementById('loading-spinner');
+            if (spinner) {
+                spinner.classList.remove('active');
+            }
+        }
+
+        // Función para animar filas de tabla
+        function animateTableRows() {
+            const tableRows = document.querySelectorAll('.data-table tbody tr');
+            tableRows.forEach((row, index) => {
+                row.style.animationDelay = `${index * 0.05}s`;
+                row.style.animation = 'rowFadeIn 0.5s ease forwards';
+            });
+        }
+
+        // Función para mostrar notificación animada
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : type === 'error' ? 'var(--danger-color)' : 'var(--primary-color)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg);
+                z-index: 1001;
+                max-width: 300px;
+                animation: slideInRight 0.4s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remover después de 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease forwards';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Función de demostración para probar animaciones
+        function demoAnimations() {
+            // Mostrar spinner
+            showLoadingSpinner();
+            
+            // Simular carga
+            setTimeout(() => {
+                hideLoadingSpinner();
+                showNotification('¡Datos cargados exitosamente!', 'success');
+            }, 2000);
+            
+            // Mostrar diferentes tipos de notificaciones
+            setTimeout(() => {
+                showNotification('Procesando archivo Excel...', 'info');
+            }, 3000);
+            
+            setTimeout(() => {
+                showNotification('Error al procesar archivo', 'error');
+            }, 6000);
+        }
+
+        // Función para probar animaciones de tabla
+        function demoTableAnimations() {
+            const tableContainer = document.getElementById('table-container');
+            if (tableContainer) {
+                tableContainer.style.display = 'block';
+                
+                // Simular datos de tabla
+                const tableBody = document.getElementById('table-body');
+                if (tableBody) {
+                    tableBody.innerHTML = `
+                        <tr><td>Producto 1</td><td>Categoría A</td><td>€10.00</td></tr>
+                        <tr><td>Producto 2</td><td>Categoría B</td><td>€15.00</td></tr>
+                        <tr><td>Producto 3</td><td>Categoría A</td><td>€8.50</td></tr>
+                        <tr><td>Producto 4</td><td>Categoría C</td><td>€22.00</td></tr>
+                        <tr><td>Producto 5</td><td>Categoría B</td><td>€12.50</td></tr>
+                    `;
+                    
+                    // Animar las filas
+                    animateTableRows();
+                }
+            }
+        }
+
+        function showHelp() {
+            const helpContent = `
+                <div style="max-width: 500px; line-height: 1.6;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                        📊 GUÍA DEL GESTOR DE EXCEL
+                    </h3>
+                    
+                    <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+🎯 FUNCIONES PRINCIPALES:
+                    </h4>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Cargar archivos Excel (.xlsx, .xls)</li>
+                        <li>Búsqueda global en todos los campos</li>
+                        <li>Filtros avanzados por categorías</li>
+                        <li>Vista simplificada para datos esenciales</li>
+                        <li>Exportación de datos filtrados</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+🔍 FILTROS DISPONIBLES:
+                    </h4>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Categoría, Proveedor, Familia</li>
+                        <li>Estado (Activo/Bloqueado)</li>
+                        <li>Disponibilidad en Internet</li>
+                        <li>Productos destacados</li>
+                        <li>Rangos de precios y costes</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
+💡 CONSEJOS:
+                    </h4>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Arrastra archivos directamente al área</li>
+                        <li>Usa Ctrl+F para búsqueda rápida</li>
+                        <li>Los filtros se pueden combinar</li>
+                        <li>Los datos se guardan automáticamente</li>
+                        <li>Vista simplificada muestra solo datos esenciales</li>
+                    </ul>
+                </div>
+            `;
+            
+            // Crear modal personalizado
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+            modalContent.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: var(--radius-lg);
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: var(--shadow-lg);
+                position: relative;
+            `;
+            
+            modalContent.innerHTML = helpContent;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '×';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--text-secondary);
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            `;
+            
+            closeBtn.onmouseover = () => {
+                closeBtn.style.background = 'var(--background-light)';
+                closeBtn.style.color = 'var(--text-primary)';
+            };
+            
+            closeBtn.onmouseout = () => {
+                closeBtn.style.background = 'none';
+                closeBtn.style.color = 'var(--text-secondary)';
+            };
+            
+            closeBtn.onclick = () => {
+                document.body.removeChild(modal);
+            };
+            
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+
+        // Mostrar tabla y paginación
+        function showTableAndPagination() {
+            const tableContainer = document.getElementById('table-container');
+            const pagination = document.getElementById('pagination');
+            if (tableContainer) tableContainer.style.display = 'block';
+            if (pagination) pagination.style.display = 'flex';
+        }
+
+        // Ocultar tabla y paginación
+        function hideTableAndPagination() {
+            const tableContainer = document.getElementById('table-container');
+            const pagination = document.getElementById('pagination');
+            if (tableContainer) tableContainer.style.display = 'none';
+            if (pagination) pagination.style.display = 'none';
+        }
+    </script>
+</body>
+</html> 

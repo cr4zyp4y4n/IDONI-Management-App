@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDONI - Fichas Técnicas</title>
+    <link rel="stylesheet" href="../styles/common.css">
+    <link rel="stylesheet" href="recipe-cards.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="recipe-header">
+        <h1>
+            👨‍🍳 Fichas Técnicas
+            <span style="font-size: 1rem; opacity: 0.8;">| Gestión de Recetas</span>
+        </h1>
+        <div class="subtitle">
+            Crea y gestiona fichas técnicas profesionales para tus platos
+        </div>
+        <div class="recipe-nav">
+            <button class="nav-button" onclick="window.history.back()">🏠 Volver al Menú</button>
+            <button class="nav-button" onclick="showHelp()">❓ Ayuda</button>
+            <button class="nav-button" onclick="showShortcuts()">⌨️ Atajos</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Form Content -->
+        <div class="form-content">
+            <form id="recipe-form">
+                <!-- Información del Plato -->
+                <div class="form-section">
+                    <h3>🍽️ Información del Plato</h3>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="recipe-name">Nombre del Plato:</label>
+                            <input type="text" id="recipe-name" required placeholder="Ej: Ensalada Mediterránea">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foto del Plato -->
+                <div class="form-section">
+                    <h3>📸 Foto del Plato (opcional)</h3>
+                    <div class="image-section">
+                        <label for="recipe-image" class="image-upload-label">
+                            <div class="image-upload-icon">📷</div>
+                            <div class="image-upload-text">Haz clic para añadir foto</div>
+                            <div class="image-upload-subtext">Formatos: JPG, PNG (máx. 5MB)</div>
+                        </label>
+                        <input type="file" id="recipe-image" accept="image/*">
+                        <div id="image-preview">
+                            <span style="color: #bbb; font-style: italic;">Sin foto seleccionada</span>
+                        </div>
+                        <button type="button" id="clear-image" class="action-btn btn-secondary" style="margin-top: 1rem; width: auto;">
+                            🧹 Limpiar Imagen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ingredientes y Costes -->
+                <div class="form-section">
+                    <h3>🥘 Ingredientes y Costes</h3>
+                    <div class="ingredients-table-container">
+                        <table class="ingredients-table">
+                            <thead>
+                                <tr>
+                                    <th>Ingrediente</th>
+                                    <th>Peso (g)</th>
+                                    <th>Coste (€)</th>
+                                    <th>Gastos (€)</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ingredients-table-body">
+                                <tr class="ingredient-row">
+                                    <td><input type="text" placeholder="Nombre del ingrediente" class="ingredient-name"></td>
+                                    <td><input type="number" placeholder="0" class="ingredient-weight" step="0.1" min="0"></td>
+                                    <td><input type="number" placeholder="0.00" class="ingredient-cost" step="0.01" min="0"></td>
+                                    <td><input type="number" placeholder="0.00" class="ingredient-expenses" step="0.01" min="0"></td>
+                                    <td><button type="button" class="remove-ingredient">🗑️</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" id="add-ingredient" class="add-ingredient-btn">
+                            ➕ Añadir Ingrediente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Alérgenos -->
+                <div class="form-section">
+                    <h3>⚠️ Alérgenos del Plato</h3>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="recipe-allergens">Alérgenos (separados por comas):</label>
+                            <input type="text" id="recipe-allergens" placeholder="Ej: Gluten, Lactosa, Frutos secos, Huevos">
+                        </div>
+                    </div>
+                    <div class="allergens-section">
+                        <h4>Alérgenos Detectados:</h4>
+                        <div id="allergens-list">
+                            <p style="color: #666; font-style: italic;">No se han especificado alérgenos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de Costes -->
+                <div class="cost-summary">
+                    <h4>💰 Resumen de Costes</h4>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-label">Total Peso</div>
+                            <div class="summary-value" id="total-weight">0 g</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Total Coste</div>
+                            <div class="summary-value" id="total-cost">0.00 €</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Total Gastos</div>
+                            <div class="summary-value" id="total-expenses">0.00 €</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Coste Total</div>
+                            <div class="summary-value" id="grand-total">0.00 €</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones del Formulario -->
+                <div class="form-actions">
+                    <button type="submit" class="action-btn btn-primary">
+                        💾 Guardar Ficha
+                    </button>
+                    <button type="button" id="save-and-new" class="action-btn btn-success">
+                        💾➕ Guardar y Nueva
+                    </button>
+                    <button type="button" id="new-recipe" class="action-btn btn-secondary">
+                        🆕 Nueva Ficha
+                    </button>
+                    <button type="reset" class="action-btn btn-secondary">
+                        🗑️ Limpiar
+                    </button>
+                </div>
+            </form>
+
+            <!-- Historial de Fichas -->
+            <div class="history-section">
+                <div class="history-header">
+                    <div class="history-title">📚 Historial de Fichas</div>
+                    <input type="text" class="history-search" id="history-search" placeholder="Buscar en el historial...">
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Ingredientes</th>
+                                <th>Coste Total</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #666; font-style: italic; padding: 2rem;">
+                                    No hay fichas técnicas guardadas
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Acciones Rápidas -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">⚡ Acciones Rápidas</div>
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <button class="action-btn btn-export" id="export-recipe" disabled>
+                        📄 Exportar HTML
+                    </button>
+                    <button class="action-btn btn-print" id="print-recipe" disabled>
+                        🖨️ Imprimir
+                    </button>
+                    <button class="action-btn btn-success" id="duplicate-recipe" disabled>
+                        📋 Duplicar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">📊 Estadísticas</div>
+                <div style="font-size: 0.9rem; color: #666; line-height: 1.4;">
+                    <p>• Fichas guardadas: <span id="recipe-count">0</span></p>
+                    <p>• Ingredientes totales: <span id="ingredients-count">0</span></p>
+                    <p>• Coste promedio: <span id="avg-cost">0.00 €</span></p>
+                    <p>• Última modificación: <span id="last-modified">-</span></p>
+                </div>
+            </div>
+
+            <!-- Información -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">ℹ️ Información</div>
+                <div style="font-size: 0.85rem; color: #666; line-height: 1.4;">
+                    <p>• Los datos se guardan automáticamente</p>
+                    <p>• Usa Ctrl+S para guardar rápidamente</p>
+                    <p>• Ctrl+N para nueva ficha</p>
+                    <p>• Ctrl+D para duplicar seleccionada</p>
+                    <p>• Escape para limpiar selección</p>
+                </div>
+            </div>
+
+            <!-- Vista Previa -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">👁️ Vista Previa</div>
+                <div id="recipe-preview" style="background: white; border-radius: 10px; padding: 1rem; border: 1px solid #e1efd6;">
+                    <div id="preview-content">
+                        <p style="color: #666; font-style: italic; text-align: center;">Vista previa no disponible</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="recipe-cards.js"></script>
+    <script>
+        function showHelp() {
+            alert(`👨‍🍳 GUÍA DE FICHAS TÉCNICAS
+
+🎯 FUNCIONES PRINCIPALES:
+• Crear fichas técnicas completas
+• Gestionar ingredientes y costes
+• Añadir fotos de los platos
+• Control de alérgenos automático
+• Historial completo de fichas
+
+📋 CREACIÓN DE FICHAS:
+• Nombre del plato (obligatorio)
+• Foto opcional (máx. 5MB)
+• Ingredientes con peso y costes
+• Alérgenos separados por comas
+• Cálculo automático de costes
+
+💾 GESTIÓN:
+• Guardado automático cada 30s
+• Historial con búsqueda
+• Duplicación de fichas
+• Exportación a HTML
+• Impresión directa
+
+💡 CONSEJOS:
+• Usa Ctrl+S para guardar rápido
+• Ctrl+N para nueva ficha
+• Ctrl+D para duplicar
+• Escape para limpiar selección
+• Los datos se sincronizan automáticamente`);
+        }
+
+        function showShortcuts() {
+            alert(`⌨️ ATAJOS DE TECLADO
+
+💾 GUARDADO:
+• Ctrl+S: Guardar ficha actual
+• Ctrl+N: Crear nueva ficha
+• Ctrl+D: Duplicar ficha seleccionada
+
+🔍 NAVEGACIÓN:
+• Escape: Limpiar selección del historial
+• Tab: Navegar entre campos
+• Enter: Aplicar filtros
+
+📄 EXPORTACIÓN:
+• Botón Exportar: Generar HTML
+• Botón Imprimir: Vista de impresión
+• Historial: Acceso rápido a fichas
+
+🎯 CONSEJOS:
+• Los atajos funcionan en cualquier momento
+• Los datos se guardan automáticamente
+• Usa el historial para acceder rápido
+• Duplica fichas para variaciones`);
+        }
+    </script>
+</body>
+</html> 

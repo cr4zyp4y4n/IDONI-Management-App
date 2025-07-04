@@ -1,0 +1,12 @@
+Este archivo debe ser reemplazado con un icono PNG real.
+Dimensiones recomendadas: 256x256 píxeles
+Formato: PNG con transparencia
+
+Para crear el icono:
+1. Usa el logo existente "Logo IDONI pequeño.webp"
+2. Conviértelo a PNG con dimensiones 256x256
+3. Guárdalo como "icon.png" en esta carpeta
+
+O usa herramientas online como:
+- https://convertio.co/webp-png/
+- https://www.online-image-editor.com/

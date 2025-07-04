@@ -1,0 +1,45 @@
+{
+  "name": "idoni-app",
+  "version": "1.0.0",
+  "description": "Aplicación de gestión de Excel y fichas técnicas de cocina",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never"
+  },
+  "keywords": [
+    "electron",
+    "excel",
+    "cocina",
+    "fichas-tecnicas"
+  ],
+  "author": "IDONI Project",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "dependencies": {
+    "feather-icons": "^4.29.2",
+    "file-saver": "^2.0.5",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
+    "xlsx": "^0.18.5"
+  },
+  "build": {
+    "appId": "com.idoni.app",
+    "productName": "IDONI App",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

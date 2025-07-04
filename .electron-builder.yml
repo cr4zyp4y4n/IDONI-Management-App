@@ -1,0 +1,44 @@
+appId: com.idoni.app
+productName: IDONI App
+directories:
+  output: dist
+  buildResources: build
+files:
+  - "**/*"
+  - "!node_modules/**/*"
+  - "!dist/**/*"
+  - "!build/**/*"
+  - "!*.log"
+  - "!.git/**/*"
+  - "!.vscode/**/*"
+  - "!.idea/**/*"
+extraResources:
+  - "assets/**/*"
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: assets/icon.ico
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: assets/icon.icns
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  icon: assets/icon.png
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: "IDONI App" 

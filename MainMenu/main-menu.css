@@ -1,0 +1,490 @@
+/* Fuentes locales */
+@font-face {
+    font-family: 'Fredoka Bold';
+    src: url('../fonts/fredoka-bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@font-face {
+    font-family: 'Address Sans Pro';
+    src: url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Address Sans Pro';
+    src: url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Address Sans Bold';
+    src: url('../fonts/address-sans-pro-bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8fbf5;
+    color: #405e47;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+.main-container {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    text-align: center;
+    max-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    font-family: 'Address Sans Bold', 'Address Sans Pro', Arial, sans-serif;
+    font-size: 7vw;
+    font-weight: bold;
+    color: #222;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: none;
+    animation: none;
+    z-index: 1;
+    user-select: none;
+    margin-bottom: 2.5rem;
+}
+
+.header-section {
+    margin-bottom: 0;
+    z-index: 1;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.tagline {
+    font-size: 1rem;
+    color: #888;
+    font-style: italic;
+}
+
+.workflow-section {
+    margin-bottom: 3rem;
+}
+
+.workflow-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2E7D32;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.workflow-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.step-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2E7D32;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.step-description {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -25px;
+    top: 25px;
+    font-size: 1.5rem;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.menu-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.menu-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 180px;
+}
+
+.menu-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.menu-button:hover::before {
+    left: 100%;
+}
+
+.menu-button:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.excel-button {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+}
+
+.excel-button:hover {
+    background: linear-gradient(135deg, #45a049, #388E3C);
+}
+
+.recipe-button {
+    background: linear-gradient(135deg, #ed1566, #d4145a);
+}
+
+.recipe-button:hover {
+    background: linear-gradient(135deg, #d4145a, #c0134f);
+}
+
+.button-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.button-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.button-description {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.quick-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-action {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid #4CAF50;
+    border-radius: 25px;
+    background: transparent;
+    color: #4CAF50;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.quick-action:hover {
+    background: #4CAF50;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.status-section {
+    background: #f8fbf5;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e1efd6;
+}
+
+.status-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2E7D32;
+    margin-bottom: 1rem;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.status-item {
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e1efd6;
+}
+
+.status-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 0.3rem;
+}
+
+.status-label {
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.footer {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e1efd6;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.footer .motto {
+    font-style: italic;
+    color: #ed1566;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.version-info {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .logo {
+        font-size: 12vw;
+    }
+    .splash-logo {
+        font-size: 14vw;
+    }
+    .splash-greeting {
+        font-size: 1.8rem;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+.access-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    z-index: 2;
+}
+
+.access-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.1rem 2.2rem;
+    font-size: 1.13rem;
+    font-weight: 600;
+    color: #222;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+    outline: none;
+    min-width: 160px;
+    min-height: 54px;
+    box-shadow: none;
+}
+.access-btn:hover, .access-btn:focus {
+    background: #f1f5f9;
+    color: #2563eb;
+    border-color: #2563eb33;
+}
+.excel-btn {
+    border-color: #e2e8f0;
+}
+.recipe-btn {
+    border-color: #e2e8f0;
+}
+@media (max-width: 600px) {
+    .logo {
+        font-size: 12vw;
+    }
+    .access-buttons {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+    .access-btn {
+        min-width: 120px;
+        padding: 1.1rem 1.2rem;
+        font-size: 1rem;
+    }
+}
+
+.splash-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    background: #f8fbf5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+}
+.splash-logo {
+    display: flex;
+    gap: 0.05vw;
+    font-family: 'Address Sans Bold', 'Address Sans Pro', Arial, sans-serif;
+    font-size: 9vw;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    color: #e2e8f0;
+    margin-bottom: 1.5rem;
+    user-select: none;
+}
+.splash-letter {
+    opacity: 0.3;
+    color: #e2e8f0;
+    transition: color 0.3s, opacity 0.3s;
+}
+.splash-letter.active {
+    color: #ed1566;
+    opacity: 1;
+    transition: color 0.3s, opacity 0.3s;
+}
+.splash-greeting {
+    font-size: 2.2rem;
+    color: #ed1566;
+    font-weight: 500;
+    margin-top: 0.2rem;
+    letter-spacing: 0.02em;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes greetingEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#main-menu {
+    transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.footer-text {
+    margin-top: 4rem;
+    text-align: center;
+    color: #888;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+} 
