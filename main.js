@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const XLSX = require('xlsx');
 
 // Configurar el icono de la aplicación
 const iconPath = path.resolve(__dirname, 'assets', 'idoni-icon-512.png');
@@ -250,5 +251,27 @@ ipcMain.handle('get-window-count', () => {
 ipcMain.handle('close-recipe-window', (event) => {
   if (recipeWindow) {
     recipeWindow.close();
+  }
+});
+
+// Handler para leer archivos Excel
+ipcMain.handle('read-excel-file', async (event, filePath) => {
+  try {
+    const workbook = XLSX.readFile(filePath);
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    
+    return {
+      success: true,
+      data: jsonData
+    };
+  } catch (error) {
+    console.error('Error al leer archivo Excel:', error);
+    return {
+      success: false,
+      error: error.message
+    };
   }
 }); 

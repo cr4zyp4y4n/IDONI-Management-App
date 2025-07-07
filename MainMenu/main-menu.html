@@ -101,7 +101,7 @@
                     <i data-feather="info"></i>
                     <span>Información</span>
                 </button>
-                <button class="quick-action-btn" onclick="showHelp()" title="Ayuda">
+                <button class="quick-action-btn help-button" onclick="console.log('Botón ayuda clicado'); showHelp()" title="Ayuda">
                     <i data-feather="help-circle"></i>
                     <span>Ayuda</span>
                 </button>
@@ -131,11 +131,5 @@
     </div>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="main-menu.js"></script>
-    <script>
-        // Inicializar Feather Icons
-        document.addEventListener('DOMContentLoaded', function() {
-            feather.replace();
-        });
-    </script>
 </body>
 </html> 

@@ -37,10 +37,11 @@
     },
     "files": [
       "**/*",
-      "!node_modules/**/*"
+      "!node_modules/**/*",
+      "node_modules/xlsx/**/*"
     ],
     "win": {
-      "target": "nsis",
+      "target": "portable",
       "icon": "assets/idoni-icon.ico"
     },
     "mac": {

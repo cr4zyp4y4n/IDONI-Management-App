@@ -48,11 +48,10 @@ function showInfo() {
     const infoContent = `
         <div style="max-width: 500px; line-height: 1.6;">
             <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
-                🚀 IDONI KRONOS
+                <i data-feather='info'></i> IDONI KRONOS
             </h3>
-            
             <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-                📊 GESTOR DE EXCEL:
+                <i data-feather='bar-chart-2'></i> GESTOR DE EXCEL:
             </h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                 <li>Análisis avanzado de productos</li>
@@ -60,9 +59,8 @@ function showInfo() {
                 <li>Vista simplificada y completa</li>
                 <li>Exportación de datos filtrados</li>
             </ul>
-            
             <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-                👨‍🍳 FICHAS TÉCNICAS:
+                <i data-feather='file-text'></i> FICHAS TÉCNICAS:
             </h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                 <li>Gestión profesional de recetas</li>
@@ -70,7 +68,6 @@ function showInfo() {
                 <li>Detección de alérgenos</li>
                 <li>Exportación a HTML y PDF</li>
             </ul>
-            
             <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
                 <p style="color: var(--text-secondary); font-size: 0.9rem;">
                     <strong>Versión:</strong> 1.0.0<br>
@@ -80,19 +77,18 @@ function showInfo() {
             </div>
         </div>
     `;
-    
     showModal('Información del Sistema', infoContent);
 }
 
 function showHelp() {
+    console.log('Entrando en showHelp');
     const helpContent = `
         <div style="max-width: 500px; line-height: 1.6;">
             <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
-                ❓ CENTRO DE AYUDA
+                <i data-feather='help-circle'></i> CENTRO DE AYUDA
             </h3>
-            
             <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-                🎯 CÓMO USAR:
+                <i data-feather='target'></i> CÓMO USAR:
             </h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                 <li><strong>Gestor de Excel:</strong> Carga archivos Excel y analiza datos</li>
@@ -100,9 +96,8 @@ function showHelp() {
                 <li><strong>Drag & Drop:</strong> Arrastra archivos directamente</li>
                 <li><strong>Filtros:</strong> Usa los filtros avanzados para encontrar datos</li>
             </ul>
-            
             <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-                💡 CONSEJOS:
+                <i data-feather='info'></i> CONSEJOS:
             </h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                 <li>Los datos se guardan automáticamente</li>
@@ -112,7 +107,7 @@ function showHelp() {
             </ul>
         </div>
     `;
-    
+    console.log('Llamando a showModal desde showHelp');
     showModal('Centro de Ayuda', helpContent);
 }
 
@@ -120,16 +115,14 @@ function showSettings() {
     const settingsContent = `
         <div style="max-width: 500px; line-height: 1.6;">
             <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
-                ⚙️ CONFIGURACIÓN
+                <i data-feather='settings'></i> CONFIGURACIÓN
             </h3>
-            
             <p style="color: var(--text-secondary); margin-bottom: 1rem;">
                 Las opciones de configuración estarán disponibles en futuras versiones.
             </p>
-            
             <div style="background: var(--background-light); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                 <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">
-                    🔮 PRÓXIMAMENTE:
+                    <i data-feather='zap'></i> PRÓXIMAMENTE:
                 </h4>
                 <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-secondary);">
                     <li>Temas de color personalizables</li>
@@ -140,87 +133,82 @@ function showSettings() {
             </div>
         </div>
     `;
-    
     showModal('Configuración', settingsContent);
 }
 
-function showModal(title, content) {
-    // Crear modal personalizado
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        backdrop-filter: blur(5px);
-    `;
-    
-    const modalContent = document.createElement('div');
-    modalContent.className = 'modal-content';
-    modalContent.style.cssText = `
-        background: white;
-        padding: 2rem;
-        border-radius: var(--radius-lg);
-        max-width: 600px;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: var(--shadow-xl);
-        position: relative;
-    `;
-    
-    modalContent.innerHTML = `
-        <h2 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.5rem;">${title}</h2>
-        ${content}
-    `;
-    
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '×';
-    closeBtn.style.cssText = `
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--text-secondary);
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    `;
-    
-    closeBtn.onmouseover = () => {
-        closeBtn.style.background = 'var(--background-light)';
-        closeBtn.style.color = 'var(--text-primary)';
-    };
-    
-    closeBtn.onmouseout = () => {
-        closeBtn.style.background = 'none';
-        closeBtn.style.color = 'var(--text-secondary)';
-    };
-    
-    closeBtn.onclick = () => {
-        document.body.removeChild(modal);
-    };
-    
-    modalContent.appendChild(closeBtn);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-    
-    modal.onclick = (e) => {
-        if (e.target === modal) {
+window.showModal = function(title, content) {
+    try {
+        console.log('Entrando en showModal:', title);
+        // Crear modal personalizado
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        `;
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+        modalContent.style.cssText = `
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        `;
+        modalContent.innerHTML = `
+            <h2 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.5rem;">${title}</h2>
+            ${content}
+        `;
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '×';
+        closeBtn.style.cssText = `
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        `;
+        closeBtn.onclick = () => {
             document.body.removeChild(modal);
-        }
-    };
-} 
+        };
+        modalContent.appendChild(closeBtn);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        };
+        if (typeof feather !== 'undefined') feather.replace();
+        console.log('Modal mostrado:', title);
+    } catch (err) {
+        console.error('Error mostrando modal:', err);
+        alert('Error mostrando modal: ' + err.message);
+    }
+};
+
+window.showHelp = showHelp;
+window.showInfo = showInfo;
+window.showSettings = showSettings; 

@@ -408,11 +408,10 @@
             const helpContent = `
                 <div style="max-width: 500px; line-height: 1.6;">
                     <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
-                        📊 GUÍA DEL GESTOR DE EXCEL
+                        <i data-feather="help-circle"></i> GUÍA DEL GESTOR DE EXCEL
                     </h3>
-                    
                     <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-🎯 FUNCIONES PRINCIPALES:
+                        <i data-feather="target"></i> FUNCIONES PRINCIPALES:
                     </h4>
                     <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                         <li>Cargar archivos Excel (.xlsx, .xls)</li>
@@ -421,9 +420,8 @@
                         <li>Vista simplificada para datos esenciales</li>
                         <li>Exportación de datos filtrados</li>
                     </ul>
-                    
                     <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-🔍 FILTROS DISPONIBLES:
+                        <i data-feather="filter"></i> FILTROS DISPONIBLES:
                     </h4>
                     <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                         <li>Categoría, Proveedor, Familia</li>
@@ -432,9 +430,8 @@
                         <li>Productos destacados</li>
                         <li>Rangos de precios y costes</li>
                     </ul>
-                    
                     <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">
-💡 CONSEJOS:
+                        <i data-feather="info"></i> CONSEJOS:
                     </h4>
                     <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
                         <li>Arrastra archivos directamente al área</li>
@@ -521,6 +518,8 @@
                     document.body.removeChild(modal);
                 }
             };
+
+            if (typeof feather !== 'undefined') feather.replace();
         }
 
         // Mostrar tabla y paginación

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="recipe-nav">
-            <button class="nav-button" onclick="goBackToMainMenu()">
+            <button class="nav-button" onclick="window.electronAPI.closeRecipeWindow()">
                 <i data-feather="arrow-left"></i>
                 Volver
             </button>
@@ -269,7 +269,7 @@
             const helpContent = `
                 <div style="max-width: 500px; line-height: 1.6;">
                     <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
-                        <i data-feather="book-open"></i> GUÍA DE FICHAS TÉCNICAS
+                        <i data-feather="help-circle"></i> GUÍA DE FICHAS TÉCNICAS
                     </h3>
                     
                     <h4 style="color: var(--text-primary); margin: 1rem 0 0.5rem 0;">

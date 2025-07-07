@@ -1,5 +1,3 @@
-const XLSX = require('xlsx');
-
 // Variables globales para Excel
 let excelData = [];
 let filteredData = [];
@@ -187,11 +185,19 @@ function isValidExcelFile(file) {
 async function processExcelFile(file) {
     try {
         const arrayBuffer = await file.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
         
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        // Convertir el archivo a una ruta temporal o usar una API alternativa
+        // Por ahora, vamos a usar la misma lógica que loadExcelFile
+        const filePath = await window.electronAPI.selectFile();
+        if (!filePath) return;
+
+        const result = await window.electronAPI.readExcelFile(filePath);
+        if (!result.success) {
+            showNotification('Error al leer el archivo Excel. Verifica que sea un archivo válido.', 'error');
+            return;
+        }
+
+        const jsonData = result.data;
         
         if (jsonData.length < 2) {
             showNotification('❌ El archivo Excel debe tener al menos una fila de encabezados y una fila de datos.', 'error');
@@ -242,26 +248,88 @@ async function processExcelFile(file) {
 
 // ==================== GESTOR DE EXCEL ====================
 function initializeExcelManager() {
-    loadExcelBtn.addEventListener('click', loadExcelFile);
-    saveDataBtn.addEventListener('click', saveExcelData);
-    clearDataBtn.addEventListener('click', clearExcelData);
-    toggleViewBtn.addEventListener('click', toggleTableView);
-    searchInput.addEventListener('input', filterData);
-    sortSelect.addEventListener('change', sortData);
-    applyFiltersBtn.addEventListener('click', applyFilters);
-    clearFiltersBtn.addEventListener('click', clearAllFilters);
+    console.log('Registrando event listeners...');
+    
+    try {
+        loadExcelBtn.addEventListener('click', (e) => {
+            console.log('Botón Cargar Excel clickeado');
+            loadExcelFile();
+        });
+        console.log('Event listener para loadExcelBtn registrado');
+        
+        saveDataBtn.addEventListener('click', (e) => {
+            console.log('Botón Guardar Datos clickeado');
+            saveExcelData();
+        });
+        console.log('Event listener para saveDataBtn registrado');
+        
+        clearDataBtn.addEventListener('click', (e) => {
+            console.log('Botón Limpiar Datos clickeado');
+            clearExcelData();
+        });
+        console.log('Event listener para clearDataBtn registrado');
+        
+        toggleViewBtn.addEventListener('click', (e) => {
+            console.log('Botón Toggle View clickeado');
+            toggleTableView();
+        });
+        console.log('Event listener para toggleViewBtn registrado');
+        
+        searchInput.addEventListener('input', (e) => {
+            console.log('Input de búsqueda cambiado:', e.target.value);
+            filterData();
+        });
+        console.log('Event listener para searchInput registrado');
+        
+        sortSelect.addEventListener('change', (e) => {
+            console.log('Select de ordenamiento cambiado:', e.target.value);
+            sortData();
+        });
+        console.log('Event listener para sortSelect registrado');
+        
+        applyFiltersBtn.addEventListener('click', (e) => {
+            console.log('Botón Aplicar Filtros clickeado');
+            applyFilters();
+        });
+        console.log('Event listener para applyFiltersBtn registrado');
+        
+        clearFiltersBtn.addEventListener('click', (e) => {
+            console.log('Botón Limpiar Filtros clickeado');
+            clearAllFilters();
+        });
+        console.log('Event listener para clearFiltersBtn registrado');
+        
+        console.log('Todos los event listeners registrados correctamente');
+    } catch (error) {
+        console.error('Error al registrar event listeners:', error);
+    }
 }
 
 async function loadExcelFile() {
+    console.log('Función loadExcelFile iniciada');
     try {
+        console.log('Solicitando selección de archivo...');
         const filePath = await window.electronAPI.selectFile();
-        if (!filePath) return;
-
-        const workbook = XLSX.readFile(filePath);
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
+        console.log('Archivo seleccionado:', filePath);
         
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        if (!filePath) {
+            console.log('No se seleccionó ningún archivo');
+            return;
+        }
+
+        console.log('Leyendo archivo Excel...');
+        // Usar la API de Electron para leer el archivo
+        const result = await window.electronAPI.readExcelFile(filePath);
+        console.log('Resultado de lectura:', result);
+        
+        if (!result.success) {
+            console.error('Error al leer archivo Excel:', result.error);
+            showNotification('Error al leer el archivo Excel. Verifica que sea un archivo válido.', 'error');
+            return;
+        }
+
+        const jsonData = result.data;
+        console.log('Datos JSON obtenidos:', jsonData.length, 'filas');
         
         if (jsonData.length < 2) {
             showNotification('❌ El archivo Excel debe tener al menos una fila de encabezados y una fila de datos.', 'error');
@@ -1131,6 +1199,51 @@ function showNotification(message, type = 'info') {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Inicializando Excel Manager...');
+    
+    // Verificar que los elementos del DOM existen
+    if (!loadExcelBtn) {
+        console.error('Error: loadExcelBtn no encontrado');
+        return;
+    }
+    
+    if (!saveDataBtn) {
+        console.error('Error: saveDataBtn no encontrado');
+        return;
+    }
+    
+    if (!clearDataBtn) {
+        console.error('Error: clearDataBtn no encontrado');
+        return;
+    }
+    
+    if (!toggleViewBtn) {
+        console.error('Error: toggleViewBtn no encontrado');
+        return;
+    }
+    
+    if (!searchInput) {
+        console.error('Error: searchInput no encontrado');
+        return;
+    }
+    
+    if (!sortSelect) {
+        console.error('Error: sortSelect no encontrado');
+        return;
+    }
+    
+    if (!applyFiltersBtn) {
+        console.error('Error: applyFiltersBtn no encontrado');
+        return;
+    }
+    
+    if (!clearFiltersBtn) {
+        console.error('Error: clearFiltersBtn no encontrado');
+        return;
+    }
+    
+    console.log('Todos los elementos del DOM encontrados, inicializando...');
+    
     initializeExcelManager();
     initializeDragAndDrop();
     loadSavedData();
@@ -1139,6 +1252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof feather !== 'undefined') {
         feather.replace();
     }
+    
     // Listener para el selector de filas por página del header
     const rowsPerPageSelect = document.getElementById('rows-per-page');
     if (rowsPerPageSelect) {
@@ -1154,4 +1268,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTableData();
         });
     }
+    
+    console.log('Excel Manager inicializado correctamente');
 }); 
