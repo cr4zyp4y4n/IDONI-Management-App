@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "IDONI Kronos: gestor de Excel y fichas técnicas para escritorio que te ahorra tiempo.",
   "main": "main.js",
+  "icon": "assets/icons/icon.ico",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
@@ -37,20 +38,61 @@
     },
     "files": [
       "**/*",
-      "!node_modules/**/*",
-      "node_modules/xlsx/**/*"
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
     ],
+    "asar": true,
     "win": {
       "target": "nsis",
-      "icon": "assets/idoni-icon.ico"
+      "icon": "assets/icons/icon.ico",
+      "requestedExecutionLevel": "asInvoker",
+      "signAndEditExecutable": false,
+      "publisherName": "IDONI Project",
+      "legalTrademarks": "© 2024 IDONI Project",
+      "artifactName": "${productName}-${version}.${ext}",
+      "executableName": "IDONI Kronos",
+      "fileAssociations": [
+        {
+          "ext": "xlsx",
+          "name": "Excel File",
+          "icon": "assets/icons/icon.ico"
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "IDONI Kronos",
+      "installerIcon": "assets/icons/icon.ico",
+      "uninstallerIcon": "assets/icons/icon.ico",
+      "installerHeaderIcon": "assets/icons/icon.ico",
+      "displayLanguageSelector": false
     },
     "mac": {
-      "target": "dmg",
-      "icon": "assets/idoni-icon-512.png"
+      "target": [
+        "dmg"
+      ],
+      "icon": "assets/idoni-icon-512.png",
+      "category": "public.app-category.productivity"
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "assets/idoni-icon-512.png"
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/idoni-icon-512.png",
+      "category": "Office"
     }
   }
 }

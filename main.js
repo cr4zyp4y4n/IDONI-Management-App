@@ -29,8 +29,13 @@ function createMainWindow() {
     resizable: true,
     minimizable: true,
     maximizable: true,
-    show: false
+    show: false,
+    autoHideMenuBar: true,
+    titleBarStyle: 'default'
   });
+
+  // Ocultar completamente la menubar
+  mainWindow.setMenu(null);
 
   mainWindow.loadFile('MainMenu/main-menu.html');
 
@@ -70,8 +75,13 @@ function createExcelWindow() {
     resizable: true,
     minimizable: true,
     maximizable: true,
-    show: false
+    show: false,
+    autoHideMenuBar: true,
+    titleBarStyle: 'default'
   });
+
+  // Ocultar completamente la menubar
+  excelWindow.setMenu(null);
 
   excelWindow.loadFile('GestionExcel/excel-manager.html');
 
@@ -110,8 +120,13 @@ function createRecipeWindow() {
     resizable: true,
     minimizable: true,
     maximizable: true,
-    show: false
+    show: false,
+    autoHideMenuBar: true,
+    titleBarStyle: 'default'
   });
+
+  // Ocultar completamente la menubar
+  recipeWindow.setMenu(null);
 
   recipeWindow.loadFile('FichaTecnica/recipe-cards.html');
 

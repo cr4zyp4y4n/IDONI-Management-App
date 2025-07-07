@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Cargar iconos inicialmente
+    loadFeatherIcons();
+    
     // Saludo dinámico
     const greeting = document.getElementById('splash-greeting');
     const now = new Date();
@@ -33,7 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('splash').style.display = 'none';
             const menu = document.getElementById('main-menu');
             menu.style.display = '';
-            setTimeout(() => { menu.style.opacity = '1'; }, 10);
+            setTimeout(() => { 
+                menu.style.opacity = '1'; 
+                // Cargar Feather Icons inmediatamente después de mostrar el menú
+                loadFeatherIcons();
+            }, 10);
         }, 600);
     }, 3500);
 });
@@ -192,6 +199,8 @@ window.showModal = function(title, content) {
         `;
         closeBtn.onclick = () => {
             document.body.removeChild(modal);
+            // Recargar iconos después de cerrar el modal
+            setTimeout(() => loadFeatherIcons(), 100);
         };
         modalContent.appendChild(closeBtn);
         modal.appendChild(modalContent);
@@ -199,6 +208,8 @@ window.showModal = function(title, content) {
         modal.onclick = (e) => {
             if (e.target === modal) {
                 document.body.removeChild(modal);
+                // Recargar iconos después de cerrar el modal
+                setTimeout(() => loadFeatherIcons(), 100);
             }
         };
         if (typeof feather !== 'undefined') feather.replace();
@@ -211,4 +222,11 @@ window.showModal = function(title, content) {
 
 window.showHelp = showHelp;
 window.showInfo = showInfo;
-window.showSettings = showSettings; 
+window.showSettings = showSettings;
+
+// Función para cargar Feather Icons
+function loadFeatherIcons() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+} 
